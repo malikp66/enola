@@ -161,7 +161,7 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
           </div>
 
           <div className="grid gap-4 xl:grid-cols-2">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion className="w-full">
               <AccordionItem
                 value="price-fit-method"
                 className="rounded-[1.45rem] border border-[#efdfd6] bg-[#fffaf7]/50 px-4"
@@ -175,7 +175,7 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
               </AccordionItem>
             </Accordion>
 
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion className="w-full">
               <AccordionItem
                 value="price-method"
                 className="rounded-[1.45rem] border border-[#efdfd6] bg-[#fffaf7]/50 px-4"
