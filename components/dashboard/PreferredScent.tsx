@@ -1,6 +1,6 @@
 "use client";
 
-import { Flower2, Leaf, Wind } from "lucide-react";
+import { Flower2, Wind } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -64,27 +64,27 @@ export function PreferredScent({ analytics }: { analytics: SurveyAnalytics }) {
               >
                 <defs>
                   <linearGradient id="scent-gradient" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0%" stopColor="#ca8461" />
-                    <stop offset="55%" stopColor="#e7b59c" />
-                    <stop offset="100%" stopColor="#f8ebe2" />
+                    <stop offset="0%" stopColor="#212529" />
+                    <stop offset="55%" stopColor="#495057" />
+                    <stop offset="100%" stopColor="#adb5bd" />
                   </linearGradient>
                 </defs>
-                <CartesianGrid horizontal={false} stroke="#f1e6de" strokeDasharray="4 7" />
+                <CartesianGrid horizontal={false} stroke="rgba(206,212,218,0.88)" strokeDasharray="4 7" />
                 <XAxis
                   type="number"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#9a8374", fontSize: 12 }}
+                  tick={{ fill: "#6c757d", fontSize: 12 }}
                 />
                 <YAxis
                   type="category"
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#7b6558", fontSize: 12 }}
+                  tick={{ fill: "#495057", fontSize: 12 }}
                   width={140}
                 />
-                <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(240, 223, 213, 0.28)" }} />
+                <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(233, 236, 239, 0.76)" }} />
                 <Bar dataKey="value" radius={[0, 18, 18, 0]} fill="url(#scent-gradient)" animationDuration={1100} />
               </BarChart>
             </ResponsiveContainer>

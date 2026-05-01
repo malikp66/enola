@@ -11,15 +11,10 @@ import {
   YAxis,
 } from "recharts";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { ChartCard } from "@/components/ui/ChartCard";
+import { InsightCard } from "@/components/ui/InsightCard";
 import { MetricCard } from "@/components/ui/MetricCard";
-import { SectionHeading, SoftTooltip } from "@/components/dashboard/DashboardPrimitives";
+import { LegendPill, SectionHeading } from "@/components/dashboard/DashboardPrimitives";
 import type { SurveyAnalytics } from "@/types/survey";
 
 export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
@@ -63,6 +58,7 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
             icon={BadgeDollarSign}
             accent
             className="h-full"
+            valueClassName="text-[2.5rem] leading-[0.95] tracking-tight md:text-[3.1rem] lg:text-[3.35rem]"
           />
           <MetricCard
             id="price-fit-card"
@@ -87,34 +83,34 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
               <AreaChart data={combinedData} margin={{ left: 8, right: 10, top: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="acceptable-gradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#cb8160" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#cb8160" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#343a40" stopOpacity={0.3} />
+                    <stop offset="100%" stopColor="#343a40" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="current-gradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#876f62" stopOpacity={0.25} />
-                    <stop offset="100%" stopColor="#876f62" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#adb5bd" stopOpacity={0.28} />
+                    <stop offset="100%" stopColor="#adb5bd" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid stroke="#f2e8e1" vertical={false} strokeDasharray="4 7" />
+                <CartesianGrid stroke="rgba(206,212,218,0.88)" vertical={false} strokeDasharray="4 7" />
                 <XAxis
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#7a6457", fontSize: 11 }}
+                  tick={{ fill: "#6c757d", fontSize: 11 }}
                   interval={0}
                 />
                 <YAxis
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#7a6457", fontSize: 12 }}
+                  tick={{ fill: "#6c757d", fontSize: 12 }}
                   width={30}
                 />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (!active || !payload?.length) return null;
                     return (
-                      <div className="rounded-[1.35rem] border border-[#ead8cc] bg-white/98 px-4 py-3 shadow-[0_20px_45px_rgba(146,104,79,0.15)] backdrop-blur-sm">
-                        <p className="mb-2 text-xs font-semibold text-[#2c2018]">
+                      <div className="glass-panel rounded-[1.35rem] px-4 py-3">
+                        <p className="mb-2 text-xs font-semibold text-[#17191d]">
                           Rp {payload[0].payload.label}
                         </p>
                         <div className="space-y-1.5">
@@ -125,9 +121,9 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
                                   className="h-2 w-2 rounded-full"
                                   style={{ backgroundColor: entry.color }}
                                 />
-                                <span className="text-sm text-[#7b6458]">{entry.name}</span>
+                                <span className="text-sm text-[var(--brand-muted)]">{entry.name}</span>
                               </div>
-                              <span className="text-sm font-bold text-[#2b1f18]">
+                              <span className="text-sm font-bold text-[#17191d]">
                                 {entry.value} jawaban
                               </span>
                             </div>
@@ -141,53 +137,36 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
                   name="Acceptable"
                   type="monotone"
                   dataKey="acceptable"
-                  stroke="#cb8160"
+                  stroke="#343a40"
                   strokeWidth={3}
                   fill="url(#acceptable-gradient)"
-                  activeDot={{ r: 6, fill: "#cb8160", stroke: "#fff", strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: "#343a40", stroke: "#f8f9fa", strokeWidth: 2 }}
                 />
                 <Area
                   name="Current"
                   type="monotone"
                   dataKey="current"
-                  stroke="#876f62"
+                  stroke="#adb5bd"
                   strokeWidth={2}
                   strokeDasharray="5 5"
                   fill="url(#current-gradient)"
-                  activeDot={{ r: 6, fill: "#876f62", stroke: "#fff", strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: "#adb5bd", stroke: "#f8f9fa", strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-2">
-            <Accordion className="w-full">
-              <AccordionItem
-                value="price-fit-method"
-                className="rounded-[1.45rem] border border-[#efdfd6] bg-[#fffaf7]/50 px-4"
-              >
-                <AccordionTrigger className="py-4 text-left text-sm font-medium text-[#2a1f18] hover:no-underline">
-                  Interpretasi Data Pembanding
-                </AccordionTrigger>
-                <AccordionContent className="pb-4 text-xs leading-6 text-[#715c50]">
-                  Garis putus-putus cokelat menunjukkan kebiasaan belanja asli responden. Jika garis oranye Enola lebih tinggi di rentang Rp100k-200k dibanding garis cokelat, artinya produk ini berhasil menarik segmen yang bersedia "upgrade" harga demi manfaat yang ditawarkan.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+          <div className="flex flex-wrap justify-center gap-2">
+            <LegendPill label="Acceptable Price" color="#343a40" />
+            <LegendPill label="Current Buying Range" color="#adb5bd" />
+          </div>
 
-            <Accordion className="w-full">
-              <AccordionItem
-                value="price-method"
-                className="rounded-[1.45rem] border border-[#efdfd6] bg-[#fffaf7]/50 px-4"
-              >
-                <AccordionTrigger className="py-4 text-left text-sm font-medium text-[#2a1f18] hover:no-underline">
-                  Metode Price Fit
-                </AccordionTrigger>
-                <AccordionContent className="pb-4 text-xs leading-6 text-[#715c50]">
-                  Target MVP Enola adalah Rp100.000 - Rp200.000. Score Price Fit dihitung dari proporsi jawaban responden yang menyatakan rentang ini "cocok" dibanding total jawaban valid dalam survei.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
+          <div className="grid gap-4">
+            <InsightCard className="w-full">
+              Price Fit dihitung dari porsi responden yang menilai rentang Rp100.000 - Rp200.000
+              masih cocok untuk Enola dibanding total jawaban valid, sehingga score ini langsung
+              membaca kecocokan target harga MVP terhadap ekspektasi pasar.
+            </InsightCard>
           </div>
         </ChartCard>
       </div>

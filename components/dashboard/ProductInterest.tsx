@@ -6,11 +6,10 @@ import { useEffect, useRef, useState } from "react";
 
 import { ChartCard } from "@/components/ui/ChartCard";
 import { MetricCard } from "@/components/ui/MetricCard";
-import { InsightCard } from "@/components/ui/InsightCard";
 import { LegendPill, SectionHeading, SoftTooltip } from "@/components/dashboard/DashboardPrimitives";
 import type { SurveyAnalytics } from "@/types/survey";
 
-const INTEREST_COLORS = ["#cb8462", "#e7b39a", "#f0d7ca", "#f6ede8"];
+const INTEREST_COLORS = ["#212529", "#343a40", "#495057", "#adb5bd"];
 
 export function ProductInterest({ analytics }: { analytics: SurveyAnalytics }) {
   const { productInterest } = analytics;
@@ -122,7 +121,7 @@ export function ProductInterest({ analytics }: { analytics: SurveyAnalytics }) {
                       <Cell
                         key={entry.label}
                         fill={INTEREST_COLORS[index % INTEREST_COLORS.length]}
-                        stroke="#fffaf7"
+                        stroke="rgba(248,251,255,0.95)"
                         strokeWidth={4}
                       />
                     ))}
@@ -160,17 +159,17 @@ export function ProductInterest({ analytics }: { analytics: SurveyAnalytics }) {
               {productInterest.mainBenefitChart.map((item) => (
                 <div
                   key={item.label}
-                  className="rounded-[1.45rem] border border-[#efdfd6] bg-white/90 p-4"
+                  className="rounded-[1.45rem] border border-[#ced4da] bg-[linear-gradient(180deg,#f8f9fa_0%,#eef1f4_100%)] p-4 shadow-[0_10px_24px_rgba(33,37,41,0.04)]"
                 >
                   <div className="mb-3 flex items-center justify-between gap-3">
-                    <p className="text-[0.96rem] font-medium leading-6 text-[#281c15]">
+                    <p className="text-[0.96rem] font-medium leading-6 text-[#17191d]">
                       {item.label}
                     </p>
-                    <span className="text-sm text-[#8a7367]">{Math.round(item.percentage)}%</span>
+                    <span className="text-sm text-[var(--brand-muted)]">{Math.round(item.percentage)}%</span>
                   </div>
-                  <div className="h-2.5 overflow-hidden rounded-full bg-[#f3e9e2]">
+                  <div className="h-2.5 overflow-hidden rounded-full bg-[#dee2e6]">
                     <div
-                      className="h-full rounded-full bg-[linear-gradient(90deg,#cb8462,#f0c3a9)]"
+                      className="h-full rounded-full bg-[linear-gradient(90deg,#212529_0%,#343a40_42%,#6c757d_100%)]"
                       style={{ width: `${Math.max(item.percentage, 8)}%` }}
                     />
                   </div>
@@ -178,22 +177,11 @@ export function ProductInterest({ analytics }: { analytics: SurveyAnalytics }) {
               ))}
             </div>
 
-            <div
-              className={`pointer-events-none absolute inset-x-0 top-0 h-12 bg-[linear-gradient(180deg,#fffaf7_5%,rgba(255,250,247,0.78)_36%,transparent_100%)] transition-opacity duration-300 ${
-                canScrollUp ? "opacity-100" : "opacity-0"
-              }`}
-            />
-            <div
-              className={`pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent_0%,rgba(255,250,247,0.82)_48%,#fffaf7_100%)] transition-opacity duration-300 ${
-                canScrollDown ? "opacity-100" : "opacity-0"
-              }`}
-            />
-
             {(canScrollDown || canScrollUp) && (
               <button
                 type="button"
                 onClick={handleScrollHintClick}
-                className="absolute inset-x-0 bottom-0 mx-auto grid h-10 w-10 place-items-center rounded-full border border-[#ebd9cd] bg-white/96 text-[#b87a5e] shadow-[0_14px_30px_rgba(145,104,79,0.12)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="glass-icon absolute inset-x-0 bottom-0 mx-auto grid h-10 w-10 place-items-center rounded-full text-[var(--brand-royal)] transition-transform duration-300 hover:-translate-y-0.5"
                 aria-label={
                   canScrollDown
                     ? "Scroll ke benefit berikutnya"

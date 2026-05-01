@@ -1,0 +1,39 @@
+/*
+  Backup palette reference before monochrome glassmorphism refresh.
+  This file is intentionally not imported by the app.
+*/
+
+:root {
+  --background: #fffdfa;
+  --foreground: #241914;
+  --card: #ffffff;
+  --card-foreground: #241914;
+  --popover: #ffffff;
+  --popover-foreground: #241914;
+  --primary: #2b201a;
+  --primary-foreground: #fff9f5;
+  --secondary: #f7ede7;
+  --secondary-foreground: #37261f;
+  --muted: #fbf3ee;
+  --muted-foreground: #7f685a;
+  --accent: #f8eee9;
+  --accent-foreground: #2d2018;
+  --destructive: #c44f4f;
+  --border: #ebddd4;
+  --input: #ebddd4;
+  --ring: #d5a48b;
+  --chart-1: #cb8562;
+  --chart-2: #deaa92;
+  --chart-3: #efd0bf;
+  --chart-4: #f5e7de;
+  --chart-5: #f9f2ed;
+  --radius: 1rem;
+  --sidebar: #fffaf6;
+  --sidebar-foreground: #241914;
+  --sidebar-primary: #2b201a;
+  --sidebar-primary-foreground: #fff9f5;
+  --sidebar-accent: #f8eee9;
+  --sidebar-accent-foreground: #241914;
+  --sidebar-border: #ebddd4;
+  --sidebar-ring: #d5a48b;
+}

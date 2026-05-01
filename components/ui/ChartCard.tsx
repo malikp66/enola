@@ -14,6 +14,8 @@ export function ChartCard({
   children,
   footer,
   className,
+  hideIcon = false,
+  descriptionClassName,
 }: {
   id: string;
   title: string;
@@ -22,6 +24,8 @@ export function ChartCard({
   children: React.ReactNode;
   footer?: React.ReactNode;
   className?: string;
+  hideIcon?: boolean;
+  descriptionClassName?: string;
 }) {
   return (
     <motion.div
@@ -35,22 +39,26 @@ export function ChartCard({
         id={id}
         data-tour={id}
         className={cn(
-          "overflow-hidden rounded-[2rem] border border-[#eadbd2] bg-[linear-gradient(180deg,#ffffff_0%,#fdf8f5_100%)] shadow-[0_22px_55px_rgba(148,104,79,0.08)]",
+          "glass-panel overflow-hidden rounded-[2rem]",
           className
         )}
       >
         <CardHeader className="relative gap-3 px-6 pt-6">
-          <div className="absolute inset-x-6 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(203,133,96,0.35),transparent)]" />
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-1.5">
-              <CardTitle className="font-heading text-[2rem] leading-none text-[#241914]">
+          <div className="absolute inset-x-6 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(173,181,189,0.42),rgba(206,212,218,0.7),transparent)]" />
+          <div className={cn("flex items-start gap-4", hideIcon ? "justify-start" : "justify-between")}>
+            <div className={cn("space-y-1.5", hideIcon && "w-full")}>
+              <CardTitle className="font-heading text-[2rem] leading-none text-[#111215]">
                 {title}
               </CardTitle>
-              <p className="max-w-xl text-sm leading-6 text-[#7a6558]">{description}</p>
+              <p className={cn("max-w-xl text-sm leading-6 text-[var(--brand-muted)]", descriptionClassName)}>
+                {description}
+              </p>
             </div>
-            <div className="grid h-11 w-11 place-items-center rounded-full border border-[#eddccf] bg-white/90 text-[#bc7a5e]">
-              <Icon aria-hidden="true" className="h-5 w-5" />
-            </div>
+            {!hideIcon ? (
+              <div className="glass-icon grid h-11 w-11 place-items-center rounded-full text-[var(--brand-royal)]">
+                <Icon aria-hidden="true" className="h-5 w-5" />
+              </div>
+            ) : null}
           </div>
         </CardHeader>
         <CardContent className="space-y-5 px-6 pb-6">

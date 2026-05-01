@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:text-[#2b201a] focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:border focus:border-white/70 focus:bg-white/80 focus:px-4 focus:py-2 focus:text-sm focus:text-[#121417] focus:shadow-[0_16px_40px_rgba(15,23,42,0.12)] focus:backdrop-blur-xl"
         >
           Skip to main content
         </a>

@@ -53,8 +53,8 @@ function normalizeProvinceName(value: string) {
 }
 
 function provinceFill(share: number) {
-  const opacity = 0.2 + share * 0.8;
-  return `rgba(201,129,93,${opacity.toFixed(3)})`;
+  const opacity = 0.18 + share * 0.78;
+  return `rgba(52,58,64,${opacity.toFixed(3)})`;
 }
 
 function intensity(value: number, max: number) {
@@ -248,8 +248,8 @@ export function ProvinceDistributionMap({
 
       provincePaths.forEach((path) => {
         path.setAttribute("class", "province-region");
-        path.setAttribute("fill", "#f6efe9");
-        path.setAttribute("stroke", "#e7d7cb");
+        path.setAttribute("fill", "rgba(233,236,239,0.54)");
+        path.setAttribute("stroke", "rgba(206,212,218,0.94)");
         path.setAttribute("stroke-width", "0.75");
         path.setAttribute("vector-effect", "non-scaling-stroke");
       });
@@ -266,7 +266,7 @@ export function ProvinceDistributionMap({
         provincePath.setAttribute("fill", provinceFill(share));
         provincePath.setAttribute(
           "stroke",
-          index === 0 ? "rgba(142,84,54,0.55)" : "rgba(173,104,69,0.24)"
+          index === 0 ? "rgba(33,37,41,0.42)" : "rgba(73,80,87,0.18)"
         );
         provincePath.setAttribute("stroke-width", index === 0 ? "1.05" : "0.85");
         provincePath.setAttribute("opacity", index === 0 ? "1" : "0.92");
@@ -403,14 +403,14 @@ export function ProvinceDistributionMap({
               dangerouslySetInnerHTML={{ __html: svgMarkup }}
             />
           ) : (
-            <div className="grid h-full min-h-[30rem] place-items-center text-sm text-[#947767]">
+            <div className="grid h-full min-h-[30rem] place-items-center text-sm text-[#6b7280]">
               Peta Indonesia sedang dimuat.
             </div>
           )}
 
           {tooltip ? (
             <div
-              className="pointer-events-none absolute z-20 w-[13rem] rounded-[1.5rem] border border-[#ebd6c9] bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(255,247,241,0.96)_100%)] px-4 py-3 shadow-[0_24px_60px_rgba(133,92,69,0.18)] backdrop-blur-md"
+              className="glass-panel-strong pointer-events-none absolute z-20 w-[13rem] rounded-[1.5rem] px-4 py-3"
               style={{
                 left: tooltip.x,
                 top: tooltip.y,
@@ -419,31 +419,31 @@ export function ProvinceDistributionMap({
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[#bc8163]">
+                  <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[var(--brand-royal)]">
                     Province Insight
                   </p>
-                  <p className="mt-1 text-base font-medium text-[#2a1d16]">
+                  <p className="mt-1 text-base font-medium text-[#17191d]">
                     {tooltip.label}
                   </p>
                 </div>
-                <div className="rounded-full bg-[#fff2ea] px-2.5 py-1 text-[0.72rem] font-semibold text-[#b86f4c]">
+                <div className="glass-pill rounded-full px-2.5 py-1 text-[0.72rem] font-semibold text-[var(--brand-royal)]">
                   #{tooltip.rank}
                 </div>
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2">
-                <div className="rounded-[1rem] bg-[#fff8f3] px-3 py-2">
-                  <p className="text-[0.68rem] uppercase tracking-[0.2em] text-[#9b7f71]">
+                <div className="glass-panel rounded-[1rem] px-3 py-2">
+                  <p className="text-[0.68rem] uppercase tracking-[0.2em] text-[var(--brand-muted)]">
                     Response
                   </p>
-                  <p className="mt-1 font-heading text-[1.5rem] leading-none text-[#2a1d16]">
+                  <p className="mt-1 font-heading text-[1.5rem] leading-none text-[#17191d]">
                     {tooltip.value}
                   </p>
                 </div>
-                <div className="rounded-[1rem] bg-[#fff8f3] px-3 py-2">
-                  <p className="text-[0.68rem] uppercase tracking-[0.2em] text-[#9b7f71]">
+                <div className="glass-panel rounded-[1rem] px-3 py-2">
+                  <p className="text-[0.68rem] uppercase tracking-[0.2em] text-[var(--brand-muted)]">
                     Share
                   </p>
-                  <p className="mt-1 font-heading text-[1.5rem] leading-none text-[#2a1d16]">
+                  <p className="mt-1 font-heading text-[1.5rem] leading-none text-[#17191d]">
                     {tooltip.percentage}%
                   </p>
                 </div>
@@ -453,16 +453,16 @@ export function ProvinceDistributionMap({
         </div>
       </div>
 
-      <div className="relative flex h-full min-h-[30rem] flex-col">
+      <div className="relative flex h-full min-h-[30rem] flex-col xl:-mt-10">
         <div className="mb-4">
           <div>
-            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#b07b61]">
+            <p className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[var(--brand-royal)]">
               Province Rank
             </p>
-            <p className="mt-2 font-heading text-[2.2rem] leading-none text-[#251914]">
+            <p className="mt-2 font-heading text-[2.2rem] leading-none text-[#111215]">
               {provinces.length}
             </p>
-            <p className="mt-2 text-sm leading-6 text-[#7a6558]">
+            <p className="mt-2 text-sm leading-6 text-[var(--brand-muted)]">
               Provinsi terurut dari jumlah response terbanyak.
             </p>
           </div>
@@ -478,19 +478,18 @@ export function ProvinceDistributionMap({
             onScroll={handleListScroll}
           >
             {provinces.map((province, index) => {
-              const share = intensity(province.value, maxCount);
               const glyph = provinceGlyphs[province.label];
 
               return (
                 <div
                   key={province.label}
-                  className="rounded-[1.35rem] border border-[#efdfd4] bg-white/92 p-3.5"
+                  className="rounded-[1.35rem] border border-[#ced4da] bg-[linear-gradient(180deg,#f8f9fa_0%,#eef1f4_100%)] p-3.5 shadow-[0_10px_24px_rgba(33,37,41,0.04)]"
                 >
                   <div className="mb-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                       <div
                         className={cn(
-                          "grid h-12 w-12 place-items-center rounded-full border border-[#eeded3] bg-[#fff6f0] text-[#bf7f62]",
+                          "glass-icon grid h-12 w-12 place-items-center rounded-full text-[var(--brand-royal)]",
                           !glyph && "text-[0.65rem] font-semibold"
                         )}
                       >
@@ -501,25 +500,25 @@ export function ProvinceDistributionMap({
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-[#2b1f18]">
+                        <p className="text-sm font-medium text-[#17191d]">
                           {province.label}
                         </p>
-                        <p className="text-xs text-[#8c7467]">
+                        <p className="text-xs text-[var(--brand-muted)]">
                           Rank #{index + 1} • {province.value} response
                         </p>
                       </div>
                     </div>
-                    <span className="font-heading text-[1.65rem] leading-none text-[#2b1f18]">
+                    <span className="font-heading text-[1.65rem] leading-none text-[#17191d]">
                       {Math.round(province.percentage)}%
                     </span>
                   </div>
 
-                  <div className="h-2.5 overflow-hidden rounded-full bg-[#f2e8e1]">
+                  <div className="h-2.5 overflow-hidden rounded-full bg-[#dee2e6]">
                     <div
-                      className="h-full rounded-full bg-[linear-gradient(90deg,#c9815d_0%,#e9b799_62%,#f5e4d7_100%)]"
+                      className="h-full rounded-full bg-[linear-gradient(90deg,#212529_0%,#343a40_44%,#495057_72%,#adb5bd_100%)]"
                       style={{
                         width: `${Math.max(province.percentage, 8)}%`,
-                        opacity: 0.58 + share * 0.42,
+                        opacity: 1,
                       }}
                     />
                   </div>
@@ -528,24 +527,11 @@ export function ProvinceDistributionMap({
             })}
           </div>
 
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-x-0 top-0 h-12 bg-[linear-gradient(180deg,#fffaf7_5%,rgba(255,250,247,0.78)_36%,transparent_100%)] transition-opacity duration-300",
-              canScrollUp ? "opacity-100" : "opacity-0"
-            )}
-          />
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(180deg,transparent_0%,rgba(255,250,247,0.82)_48%,#fffaf7_100%)] transition-opacity duration-300",
-              canScrollDown ? "opacity-100" : "opacity-0"
-            )}
-          />
-
           {(canScrollDown || canScrollUp) && (
             <button
               type="button"
               onClick={handleScrollHintClick}
-              className="absolute inset-x-0 bottom-0 mx-auto grid h-10 w-10 place-items-center rounded-full border border-[#ebd9cd] bg-white/96 text-[#b87a5e] shadow-[0_14px_30px_rgba(145,104,79,0.12)] transition-transform duration-300 hover:-translate-y-0.5"
+              className="glass-icon absolute inset-x-0 bottom-0 mx-auto grid h-10 w-10 place-items-center rounded-full text-[var(--brand-royal)] transition-transform duration-300 hover:-translate-y-0.5"
               aria-label={
                 canScrollDown
                   ? "Scroll ke daftar provinsi berikutnya"

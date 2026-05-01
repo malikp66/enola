@@ -51,21 +51,22 @@ export function CustomerProblem({ analytics }: { analytics: SurveyAnalytics }) {
               <BarChart data={customerProblem.problemChart} layout="vertical" margin={{ left: 8 }}>
                 <defs>
                   <linearGradient id="problem-gradient" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0%" stopColor="#c87d5b" />
-                    <stop offset="100%" stopColor="#f3d9ca" />
+                    <stop offset="0%" stopColor="#212529" />
+                    <stop offset="55%" stopColor="#495057" />
+                    <stop offset="100%" stopColor="#adb5bd" />
                   </linearGradient>
                 </defs>
-                <CartesianGrid horizontal stroke="#f1e7df" strokeDasharray="4 7" />
-                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fill: "#9a8475" }} />
+                <CartesianGrid horizontal stroke="rgba(206,212,218,0.88)" strokeDasharray="4 7" />
+                <XAxis type="number" tickLine={false} axisLine={false} tick={{ fill: "#6c757d" }} />
                 <YAxis
                   type="category"
                   dataKey="label"
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fill: "#6f5b4e", fontSize: 12 }}
+                  tick={{ fill: "#495057", fontSize: 12 }}
                   width={130}
                 />
-                <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(240, 223, 215, 0.28)" }} />
+                <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(233, 236, 239, 0.76)" }} />
                 <Bar
                   dataKey="value"
                   radius={[0, 18, 18, 0]}

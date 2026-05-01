@@ -20,7 +20,7 @@ import { ChartCard } from "@/components/ui/ChartCard";
 import { SectionHeading, SoftTooltip } from "@/components/dashboard/DashboardPrimitives";
 import type { DistributionDatum, SurveyAnalytics } from "@/types/survey";
 
-const ACTIVITY_RING_COLORS = ["#c77f5c", "#d99673", "#e7b39a", "#f1d9cc"];
+const ACTIVITY_RING_COLORS = ["#212529", "#343a40", "#495057", "#adb5bd"];
 
 export function ConsumerSignals({ analytics }: { analytics: SurveyAnalytics }) {
   const { consumerSignals } = analytics;
@@ -102,24 +102,24 @@ function HorizontalSignalChart({
         <BarChart data={data} layout="vertical" margin={{ left: 8 }}>
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#cb8562" />
-              <stop offset="58%" stopColor="#e8baa2" />
-              <stop offset="100%" stopColor="#f8ebe2" />
+              <stop offset="0%" stopColor="#212529" />
+              <stop offset="56%" stopColor="#495057" />
+              <stop offset="100%" stopColor="#adb5bd" />
             </linearGradient>
           </defs>
-          <CartesianGrid horizontal stroke="#f1e7df" strokeDasharray="4 7" />
+          <CartesianGrid horizontal stroke="rgba(206,212,218,0.88)" strokeDasharray="4 7" />
           <XAxis
             type="number"
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#998376", fontSize: 12 }}
+            tick={{ fill: "#6c757d", fontSize: 12 }}
           />
           <YAxis
             type="category"
             dataKey="label"
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#7b6659", fontSize: 12 }}
+            tick={{ fill: "#495057", fontSize: 12 }}
             width={120}
           />
           <Tooltip content={<SoftTooltip />} />
@@ -145,25 +145,25 @@ function VerticalSignalChart({
         <BarChart data={data} barGap={16}>
           <defs>
             <linearGradient id={gradientId} x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stopColor="#cb8462" />
-              <stop offset="58%" stopColor="#e8baa2" />
-              <stop offset="100%" stopColor="#f8ebe2" />
+              <stop offset="0%" stopColor="#212529" />
+              <stop offset="56%" stopColor="#495057" />
+              <stop offset="100%" stopColor="#adb5bd" />
             </linearGradient>
           </defs>
-          <CartesianGrid stroke="#f1e7df" vertical={false} strokeDasharray="4 7" />
+          <CartesianGrid stroke="rgba(206,212,218,0.88)" vertical={false} strokeDasharray="4 7" />
           <XAxis
             dataKey="label"
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#7b6659", fontSize: 12 }}
+            tick={{ fill: "#495057", fontSize: 12 }}
             interval={0}
           />
           <YAxis
             tickLine={false}
             axisLine={false}
-            tick={{ fill: "#998376", fontSize: 12 }}
+            tick={{ fill: "#6c757d", fontSize: 12 }}
           />
-          <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(239, 222, 212, 0.28)" }} />
+          <Tooltip content={<SoftTooltip />} cursor={{ fill: "rgba(233, 236, 239, 0.76)" }} />
           <Bar dataKey="value" radius={[18, 18, 8, 8]} fill={`url(#${gradientId})`} />
         </BarChart>
       </ResponsiveContainer>
@@ -175,10 +175,11 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
   const ordered = [...data].sort((left, right) => right.value - left.value);
   const radii = [84, 63, 42, 21];
   const circumference = radii.map((radius) => 2 * Math.PI * radius);
+  const leadSignal = ordered[0];
 
   return (
     <div className="grid h-[19rem] items-center gap-6 md:grid-cols-[0.94fr_1.06fr]">
-      <div className="relative mx-auto flex h-[15rem] w-[15rem] items-center justify-center">
+      <div className="group relative mx-auto flex h-[15rem] w-[15rem] items-center justify-center">
         <svg
           viewBox="0 0 220 220"
           className="h-full w-full -rotate-90"
@@ -191,7 +192,7 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
                 cy="110"
                 r={radii[index]}
                 fill="none"
-                stroke="rgba(243,232,225,0.92)"
+                stroke="rgba(233,236,239,0.92)"
                 strokeWidth="14"
               />
               <circle
@@ -207,11 +208,30 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
             </g>
           ))}
         </svg>
-        <div className="absolute inset-[31%] rounded-full border border-[#efe1d7] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.96),rgba(252,245,240,0.9))] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]" />
+        <div className="glass-panel absolute inset-[31%] rounded-full" />
         <div className="absolute text-center">
-          <p className="font-heading text-[2.3rem] leading-none text-[#261a14]">
-            {Math.round(ordered[0]?.percentage ?? 0)}%
-          </p>
+          <div className="relative inline-flex flex-col items-center">
+            <button
+              type="button"
+              className="cursor-help rounded-full px-2 py-1"
+              aria-label={`Lihat detail sinyal tertinggi: ${leadSignal?.label ?? "Belum ada data"}`}
+            >
+              <p className="font-heading text-[2.3rem] leading-none text-[#111215]">
+                {Math.round(leadSignal?.percentage ?? 0)}%
+              </p>
+            </button>
+            {leadSignal ? (
+              <div className="glass-panel pointer-events-none absolute left-1/2 top-full z-10 mt-3 w-max min-w-[11rem] -translate-x-1/2 rounded-[1.1rem] px-3 py-2 text-left opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--brand-royal)]">
+                  Top signal
+                </p>
+                <p className="mt-1 text-sm font-medium text-[#17191d]">{leadSignal.label}</p>
+                <p className="mt-1 text-xs text-[var(--brand-muted)]">
+                  {leadSignal.value} jawaban • {Math.round(leadSignal.percentage)}%
+                </p>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
 
@@ -219,7 +239,7 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
         {ordered.map((item, index) => (
           <div
             key={item.label}
-            className="rounded-[1.2rem] border border-[#efdfd4] bg-white/92 px-3.5 py-3"
+            className="glass-panel rounded-[1.2rem] px-3.5 py-3"
           >
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -228,11 +248,11 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
                   style={{ backgroundColor: ACTIVITY_RING_COLORS[index % ACTIVITY_RING_COLORS.length] }}
                 />
                 <div>
-                  <p className="text-sm font-medium text-[#2b1f18]">{item.label}</p>
-                  <p className="text-xs text-[#8c7467]">{item.value} jawaban</p>
+                  <p className="text-sm font-medium text-[#17191d]">{item.label}</p>
+                  <p className="text-xs text-[var(--brand-muted)]">{item.value} jawaban</p>
                 </div>
               </div>
-              <span className="font-heading text-[1.45rem] leading-none text-[#2b1f18]">
+              <span className="font-heading text-[1.45rem] leading-none text-[#17191d]">
                 {Math.round(item.percentage)}%
               </span>
             </div>

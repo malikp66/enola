@@ -163,14 +163,14 @@ function LoadingScreen() {
       aria-live="polite"
     >
       <div className="flex w-full max-w-3xl flex-col items-center gap-8 text-center">
-        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.38em] text-[#b57a5e]">
+        <p className="text-[0.68rem] font-semibold uppercase tracking-[0.38em] text-[var(--brand-royal)]">
           Market Validation Dashboard
         </p>
         <MorphingText
           texts={["enola", "ENOLA", "enola"]}
-          className="h-[5.5rem] font-heading text-[5rem] font-semibold tracking-[0.06em] text-[#2a1d16] md:h-[8rem] md:text-[7rem] lg:h-[9.5rem] lg:text-[8.5rem]"
+          className="h-[5.5rem] font-heading text-[5rem] font-semibold tracking-[0.06em] text-[#111215] md:h-[8rem] md:text-[7rem] lg:h-[9.5rem] lg:text-[8.5rem]"
         />
-        <p className="text-sm leading-7 text-[#9a8276]">
+        <p className="text-sm leading-7 text-[var(--brand-muted)]">
           Menyiapkan hasil survei responden Enola
         </p>
       </div>
@@ -181,16 +181,16 @@ function LoadingScreen() {
 function ErrorScreen({ message }: { message: string }) {
   return (
     <main id="main-content" className="page-shell" aria-live="polite">
-      <div className="rounded-[2.7rem] border border-[#eed9cf] bg-[linear-gradient(180deg,#fffefb_0%,#fff7f3_100%)] p-8 shadow-[0_30px_80px_rgba(140,98,76,0.08)]">
-        <div className="mb-5 flex items-center gap-3 text-[#bb7458]">
+      <div className="glass-panel-strong rounded-[2.7rem] p-8">
+        <div className="mb-5 flex items-center gap-3 text-[var(--brand-royal)]">
           <AlertTriangle aria-hidden="true" className="h-5 w-5" />
           <p className="text-sm uppercase tracking-[0.26em]">Error state</p>
         </div>
         <div className="space-y-4">
-          <h1 className="font-heading text-[3rem] leading-none text-[#281c15]">
+          <h1 className="font-heading text-[3rem] leading-none text-[#111215]">
             Dashboard belum bisa menampilkan data
           </h1>
-          <p className="max-w-2xl text-sm leading-7 text-[#6f5a4e]">{message}</p>
+          <p className="max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">{message}</p>
           <InsightCard>
             Pastikan file tersedia di `public/data/enola-survey.csv` dan kolom penting seperti
             provinsi, minat produk, harga, dan purchase intention tetap terdeteksi.
@@ -204,20 +204,20 @@ function ErrorScreen({ message }: { message: string }) {
 function EmptyScreen() {
   return (
     <main id="main-content" className="page-shell" aria-live="polite">
-      <div className="rounded-[2.7rem] border border-[#eedfd5] bg-[linear-gradient(180deg,#fffefb_0%,#fff7f3_100%)] p-8 shadow-[0_30px_80px_rgba(140,98,76,0.08)]">
-        <div className="mb-5 flex items-center gap-3 text-[#b97d60]">
+      <div className="glass-panel-strong rounded-[2.7rem] p-8">
+        <div className="mb-5 flex items-center gap-3 text-[var(--brand-royal)]">
           <SearchX aria-hidden="true" className="h-5 w-5" />
           <p className="text-sm uppercase tracking-[0.26em]">Empty state</p>
         </div>
-        <h1 className="font-heading text-[3rem] leading-none text-[#281c15]">
+        <h1 className="font-heading text-[3rem] leading-none text-[#111215]">
           Data survei belum ditemukan
         </h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-[#715c50]">
+        <p className="mt-4 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
           Tambahkan file CSV hasil export Google Sheets ke `public/data/enola-survey.csv`, lalu
           buka ulang dashboard untuk memproses dan memvisualisasikan hasil survei Enola.
         </p>
-        <div className="mt-8 inline-flex items-center gap-3 rounded-full border border-[#ecdcd2] bg-white/90 px-4 py-2 text-sm text-[#725e52]">
-          <ChartNoAxesCombined aria-hidden="true" className="h-4 w-4 text-[#bd7e61]" />
+        <div className="glass-pill mt-8 inline-flex items-center gap-3 rounded-full px-4 py-2 text-sm text-[var(--brand-muted)]">
+          <ChartNoAxesCombined aria-hidden="true" className="h-4 w-4 text-[var(--brand-royal)]" />
           Dashboard akan otomatis membaca file saat halaman dibuka
         </div>
       </div>

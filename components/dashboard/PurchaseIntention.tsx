@@ -4,14 +4,18 @@ import { MousePointerClick, PieChart, TrendingUp } from "lucide-react";
 import { Cell, Pie, PieChart as RechartsPieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import { ChartCard } from "@/components/ui/ChartCard";
+import { InsightCard } from "@/components/ui/InsightCard";
 import { MetricCard } from "@/components/ui/MetricCard";
 import { LegendPill, SectionHeading, SoftTooltip } from "@/components/dashboard/DashboardPrimitives";
 import type { SurveyAnalytics } from "@/types/survey";
 
-const PURCHASE_COLORS = ["#c97f5d", "#e6b49c", "#f0d8cc", "#f7ede7"];
+const PURCHASE_COLORS = ["#212529", "#343a40", "#495057", "#adb5bd"];
 
 export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics }) {
   const { purchaseIntention } = analytics;
+  const strongestSignal = purchaseIntention.purchaseIntentionChart[0];
+  const hesitantSignal =
+    purchaseIntention.purchaseIntentionChart[purchaseIntention.purchaseIntentionChart.length - 1];
 
   return (
     <section id="purchase-intention" className="space-y-6">
@@ -21,8 +25,8 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
         description="Interest belum tentu berujung beli. Bagian ini membaca seberapa besar kemungkinan responden benar-benar ingin mencoba membeli jika produk tersedia."
       />
 
-      <div className="grid items-start gap-5 xl:grid-cols-[0.84fr_1.16fr]">
-        <div className="grid h-full content-start gap-5">
+      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.06fr]">
+        <div className="grid h-full gap-5 xl:grid-rows-[minmax(0,1fr)_minmax(0,1fr)]">
           <MetricCard
             id="purchase-potential-card"
             title="Purchase Potential Score"
@@ -31,7 +35,7 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
             description="Gabungan jawaban Sangat mungkin dan Mungkin sebagai indikator purchase potential."
             icon={TrendingUp}
             accent
-            className="h-full"
+            className="h-full min-h-[13.5rem]"
           />
           <MetricCard
             id="conversion-opportunity-card"
@@ -39,7 +43,7 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
             value="Conversion signal"
             description={purchaseIntention.conversionOpportunity}
             icon={MousePointerClick}
-            className="h-full"
+            className="h-full min-h-[13.5rem]"
           />
         </div>
 
@@ -48,9 +52,10 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
           title="Purchase Intention Donut"
           description="Distribusi kemungkinan responden mencoba membeli produk."
           icon={PieChart}
+          className="h-full"
         >
           <div className="grid gap-4">
-            <div className="h-[20rem]">
+            <div className="h-[15.5rem]">
               <ResponsiveContainer width="100%" height="100%">
                 <RechartsPieChart>
                   <Tooltip content={<SoftTooltip />} />
@@ -67,7 +72,7 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
                       <Cell
                         key={entry.label}
                         fill={PURCHASE_COLORS[index % PURCHASE_COLORS.length]}
-                        stroke="#fffaf7"
+                        stroke="rgba(248,251,255,0.95)"
                         strokeWidth={4}
                       />
                     ))}
@@ -75,17 +80,22 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
                 </RechartsPieChart>
               </ResponsiveContainer>
             </div>
-            <div className="space-y-4">
-              <div className="flex flex-wrap gap-2">
-                {purchaseIntention.purchaseIntentionChart.map((item, index) => (
-                  <LegendPill
-                    key={item.label}
-                    label={`${item.label} · ${item.value}`}
-                    color={PURCHASE_COLORS[index % PURCHASE_COLORS.length]}
-                  />
-                ))}
-              </div>
+            <div className="flex flex-wrap gap-2">
+              {purchaseIntention.purchaseIntentionChart.map((item, index) => (
+                <LegendPill
+                  key={item.label}
+                  label={`${item.label} · ${item.value}`}
+                  color={PURCHASE_COLORS[index % PURCHASE_COLORS.length]}
+                />
+              ))}
             </div>
+            <InsightCard>
+              {purchaseIntention.purchaseIntentionScore}% responden setidaknya masih berada pada
+              spektrum siap mencoba, dengan sinyal terkuat di kategori {strongestSignal?.label?.toLowerCase()}
+              {strongestSignal ? ` (${strongestSignal.value} jawaban)` : ""}. Penolakan paling rendah
+              datang dari {hesitantSignal?.label?.toLowerCase()}
+              {hesitantSignal ? ` yang hanya mencatat ${hesitantSignal.value} jawaban.` : "."}
+            </InsightCard>
           </div>
         </ChartCard>
       </div>
