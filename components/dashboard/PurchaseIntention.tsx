@@ -21,11 +21,11 @@ export function PurchaseIntention({ analytics }: { analytics: SurveyAnalytics })
     <section id="purchase-intention" className="space-y-6">
       <SectionHeading
         eyebrow="Purchase Intention"
-        title="Melihat sinyal willingness to try"
-        description="Interest belum tentu berujung beli. Bagian ini membaca seberapa besar kemungkinan responden benar-benar ingin mencoba membeli jika produk tersedia."
+        title="Seberapa kuat niat responden untuk mencoba"
+        description="Ketertarikan belum selalu berubah menjadi niat beli. Bagian ini membantu melihat apakah rasa penasaran yang muncul sudah cukup dekat dengan keinginan untuk mencoba saat produk tersedia."
       />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.06fr]">
+      <div id="purchase-intention-content" className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.06fr]">
         <div className="grid h-full gap-5 xl:grid-rows-[minmax(0,1fr)_minmax(0,1fr)]">
           <MetricCard
             id="purchase-potential-card"

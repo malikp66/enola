@@ -81,11 +81,11 @@ export function ProductInterest({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="product-interest" className="space-y-6">
       <SectionHeading
         eyebrow="Product Interest"
-        title="Ketertarikan awal terhadap ide Enola"
-        description="Bagian ini mengukur seberapa banyak responden yang benar-benar tertarik dengan ide scented hijab. Angka utama yang dipakai adalah gabungan jawaban Sangat tertarik dan Tertarik."
+        title="Minat awal terhadap konsep Enola"
+        description="Bagian ini memperlihatkan seberapa jauh konsep scented hijab mampu menarik perhatian responden. Fokus utamanya ada pada minat yang terlihat cukup serius untuk dipertimbangkan sebagai sinyal pasar awal."
       />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1fr_0.86fr]">
+      <div id="product-interest-content" className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1fr_0.86fr]">
         <MetricCard
             id="market-interest-card"
             title="Market Interest Score"

@@ -17,11 +17,11 @@ export function PurchaseChannelAssets({ analytics }: { analytics: SurveyAnalytic
     <section id="purchase-channel-assets" className="space-y-6">
       <SectionHeading
         eyebrow="Purchase Channel Assets"
-        title="Analisis channel pembelian responden"
-        description="Bagian ini merangkum channel pembelian yang paling sering dipilih responden agar Enola bisa membaca distribusi awal, pola kebiasaan beli, dan titik channel yang paling layak diprioritaskan."
+        title="Channel pembelian yang paling berpotensi"
+        description="Bagian ini merangkum jalur pembelian yang paling sering dipilih responden agar prioritas distribusi awal, pola kebiasaan beli, dan channel yang layak diuji bisa terlihat lebih jelas."
       />
 
-      <div className="grid items-start gap-5 xl:grid-cols-[0.42fr_1.18fr]">
+      <div id="purchase-channel-assets-content" className="grid items-start gap-5 xl:grid-cols-[0.42fr_1.18fr]">
         <MetricCard
           id="purchase-channel-metric"
           title="Top Purchase Channel"

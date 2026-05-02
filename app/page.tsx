@@ -131,6 +131,14 @@ function DashboardExperience({ analytics }: { analytics: SurveyAnalytics }) {
 
   return (
     <main id="main-content" className="page-shell">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 top-0 z-40 h-16 bg-[linear-gradient(180deg,rgba(248,249,250,0.88)_0%,rgba(248,249,250,0.36)_52%,rgba(248,249,250,0)_100%)] backdrop-blur-[3px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-20 bg-[linear-gradient(180deg,rgba(248,249,250,0)_0%,rgba(248,249,250,0.3)_44%,rgba(248,249,250,0.82)_100%)] backdrop-blur-[4px]"
+      />
       <div className="dashboard-stack">
         <MarketOverview
           analytics={analytics}

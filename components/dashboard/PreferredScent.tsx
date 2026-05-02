@@ -23,11 +23,11 @@ export function PreferredScent({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="preferred-scent" className="space-y-6">
       <SectionHeading
         eyebrow="Preferred Scent"
-        title="Aroma yang paling berpeluang jadi varian MVP"
-        description="Preferensi aroma adalah penentu penting untuk market testing pertama. Section ini membantu Enola memilih varian awal yang paling aman untuk diperkenalkan."
+        title="Aroma yang paling layak diprioritaskan"
+        description="Bagian ini membantu melihat aroma mana yang paling mudah diterima responden, sehingga pemilihan varian awal bisa terasa lebih terarah dan lebih aman untuk uji pasar pertama."
       />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
+      <div id="preferred-scent-content" className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
         <div className="grid h-full gap-5">
           <MetricCard
             id="top-scent-card"

@@ -15,11 +15,11 @@ export function FinalValidation({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="final-validation" className="space-y-6">
       <SectionHeading
         eyebrow="Final Business Validation"
-        title="Merangkum kelayakan ide bisnis Enola"
-        description="Section terakhir menggabungkan market interest, purchase intention, problem relevance, dan price fit menjadi satu final score agar keputusan lanjut atau refine bisa lebih objektif."
+        title="Ringkasan kelayakan ide Enola"
+        description="Bagian penutup ini menyatukan minat pasar, niat beli, relevansi masalah, dan kecocokan harga menjadi satu pembacaan akhir agar keputusan lanjut atau penyempurnaan bisa diambil dengan lebih mantap."
       />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
+      <div id="final-validation-content" className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
         <div className="grid h-full gap-5 xl:grid-rows-2">
           <MetricCard
             id="final-validation-score"

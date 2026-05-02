@@ -44,11 +44,11 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="price-acceptance" className="space-y-6">
       <SectionHeading
         eyebrow="Price Acceptance"
-        title="Membaca titik harga yang paling bisa diterima"
-        description="Section ini membandingkan harga yang biasa dibeli responden dengan harga yang masih cocok untuk ide produk Enola, lalu mengukurnya terhadap target MVP Rp100.000 - Rp200.000."
+        title="Titik harga yang paling dapat diterima"
+        description="Bagian ini membandingkan harga yang biasa dibayar responden dengan harga yang masih terasa masuk akal untuk konsep Enola, lalu menilainya terhadap target MVP yang ingin diuji."
       />
 
-      <div className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
+      <div id="price-acceptance-content" className="grid items-stretch gap-5 xl:grid-cols-[0.84fr_1.16fr]">
         <div className="grid h-full gap-5">
           <MetricCard
             id="best-price-card"
@@ -163,7 +163,7 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
             <LegendPill label="Current Buying Range" color="#6c757d" />
           </div>
 
-          <div className="grid gap-4">
+          <div className="mt-4 grid gap-4">
             <InsightCard className="w-full max-w-none">
               Price Fit dihitung dari porsi responden yang menilai rentang Rp100.000 - Rp200.000
               masih cocok untuk Enola dibanding total jawaban valid, sehingga score ini langsung

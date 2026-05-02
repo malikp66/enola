@@ -31,11 +31,11 @@ export function ConsumerSignals({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="consumer-signals" className="space-y-6">
       <SectionHeading
         eyebrow="Consumer Signals"
-        title="Pertanyaan survei pendukung yang memperkaya narasi"
-        description="Section ini menampung pertanyaan survei lain yang penting untuk positioning Enola: apa yang paling dicari saat membeli kerudung, seberapa sering pengguna merasa kurang segar, dan kekhawatiran apa yang muncul terhadap ide kerudung wangi."
+        title="Sinyal perilaku yang memperkaya konteks pasar"
+        description="Bagian ini membantu membaca kebiasaan dan pertimbangan responden, mulai dari prioritas saat membeli kerudung hingga rasa kurang nyaman yang bisa menguatkan konteks kebutuhan scented hijab."
       />
 
-      <div className="grid auto-rows-fr items-stretch gap-5 xl:grid-cols-2">
+      <div id="consumer-signals-content" className="grid auto-rows-fr items-stretch gap-5 xl:grid-cols-2">
         <ChartCard
           id="buying-priority-chart"
           title="Buying Priority"
@@ -233,48 +233,16 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
             </g>
           ))}
         </svg>
-        <div className="absolute text-center">
-          <div className="relative inline-flex flex-col items-center">
-            <button
-              type="button"
-              className="cursor-help rounded-full px-2 py-1"
-              aria-label={`Lihat detail distribusi utama: ${activeRing?.label ?? "Belum ada data"}`}
-              onMouseEnter={() => {
-                setActiveRingLabel(null);
-                setShowTooltip(true);
-              }}
-              onFocus={() => {
-                setActiveRingLabel(null);
-                setShowTooltip(true);
-              }}
-              onMouseLeave={() => {
-                setActiveRingLabel(null);
-                setShowTooltip(false);
-              }}
-              onBlur={() => {
-                setActiveRingLabel(null);
-                setShowTooltip(false);
-              }}
-            >
-              <p className="font-heading text-[2.3rem] leading-none text-[#111215]">
-                {Math.round((activeRing ?? leadSignal)?.percentage ?? 0)}%
-              </p>
-            </button>
-            {activeRing && showTooltip ? (
-              <div
-                className="pointer-events-none absolute left-1/2 top-full z-10 mt-3 w-max min-w-[11.5rem] -translate-x-1/2 px-1 py-1 text-left opacity-100 transition duration-200"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6c757d]">
-                  {activeRing.label === leadSignal?.label ? "Top signal" : "Signal detail"}
-                </p>
-                <p className="mt-1 text-sm font-medium text-[#17191d]">{activeRing.label}</p>
-                <p className="mt-1 text-xs text-[var(--brand-muted)]">
-                  {activeRing.value} jawaban • {Math.round(activeRing.percentage)}%
-                </p>
-              </div>
-            ) : null}
+        {activeRing && showTooltip ? (
+          <div className="pointer-events-none absolute -right-3 top-5 z-10 max-w-[11rem] text-left">
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#6c757d]">
+              {activeRing.label}
+            </p>
+            <p className="mt-1 text-sm font-medium text-[#17191d]">
+              {activeRing.value} jawaban • {Math.round(activeRing.percentage)}%
+            </p>
           </div>
-        </div>
+        ) : null}
       </div>
 
       <FreshnessScrollableList

@@ -40,7 +40,7 @@ export function MarketOverview({
             Scented Hijab Validation Dashboard
           </Text3DFlip>
         }
-        description="Dashboard ini merangkum hasil validasi pasar Enola dari survei Google Form ke dalam tampilan yang lebih siap presentasi, lebih cepat dibaca, dan lebih jelas untuk keputusan market testing."
+        description="Bagian pembuka ini merangkum ukuran sampel, wilayah dengan kontribusi tertinggi, dan sinyal kebutuhan pasar agar arah pembacaan dashboard terasa lebih jelas sejak awal."
       >
         <div className="flex flex-wrap gap-3">
           <Button
@@ -65,77 +65,79 @@ export function MarketOverview({
         </div>
       </SectionHeading>
 
-      <motion.div
-        className="mt-16 grid items-stretch gap-5 xl:grid-cols-3"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.32 }}
-        variants={{
-          hidden: {},
-          visible: {
-            transition: {
-              staggerChildren: 0.1,
-            },
-          },
-        }}
-      >
-        {[
-          <MetricCard
-            key="respondents"
-            id="total-respondents-card"
-            title="Total Respondents"
-            value={analytics.marketOverview.totalRespondents}
-            description="Jumlah responden valid yang menjadi dasar pembacaan hasil survei."
-            icon={Users}
-            accent
-          />,
-          <MetricCard
-            key="province"
-            id="top-province-card"
-            title="Top Province"
-            value={analytics.marketOverview.topProvince}
-            description="Wilayah dengan kontribusi responden terbesar saat ini."
-            icon={MapPin}
-          />,
-          <MetricCard
-            key="freshness"
-            id="active-hijab-users-card"
-            title="Freshness Need Signal"
-            value={analytics.marketOverview.freshnessNeedScore}
-            suffix="%"
-            description="Persentase responden yang sering atau kadang merasa kurang nyaman karena bau atau tidak segar."
-            icon={Droplets}
-          />,
-        ].map((card) => (
-          <motion.div
-            key={card.key}
-            className="h-full"
-            variants={{
-              hidden: { opacity: 0, y: 24, filter: "blur(10px)" },
-              visible: {
-                opacity: 1,
-                y: 0,
-                filter: "blur(0px)",
-                transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+      <div id="market-overview-content">
+        <motion.div
+          className="mt-16 grid items-stretch gap-5 xl:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.32 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.1,
               },
-            }}
-          >
-            {card}
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <div className="mt-16 grid items-start gap-6">
-        <ChartCard
-          id="province-distribution-map"
-          title="Province Distribution"
-          description="Peta Indonesia dengan intensitas warna berdasarkan jumlah response tiap provinsi, dilengkapi ranking provinsi di sisi kanan."
-          icon={MapPin}
-          hideIcon
-          descriptionClassName="max-w-none"
+            },
+          }}
         >
-          <ProvinceDistributionMap provinces={analytics.marketOverview.provinceDistribution} />
-        </ChartCard>
+          {[
+            <MetricCard
+              key="respondents"
+              id="total-respondents-card"
+              title="Total Respondents"
+              value={analytics.marketOverview.totalRespondents}
+              description="Jumlah responden valid yang menjadi dasar pembacaan hasil survei."
+              icon={Users}
+              accent
+            />,
+            <MetricCard
+              key="province"
+              id="top-province-card"
+              title="Top Province"
+              value={analytics.marketOverview.topProvince}
+              description="Wilayah dengan kontribusi responden terbesar saat ini."
+              icon={MapPin}
+            />,
+            <MetricCard
+              key="freshness"
+              id="active-hijab-users-card"
+              title="Freshness Need Signal"
+              value={analytics.marketOverview.freshnessNeedScore}
+              suffix="%"
+              description="Persentase responden yang sering atau kadang merasa kurang nyaman karena bau atau tidak segar."
+              icon={Droplets}
+            />,
+          ].map((card) => (
+            <motion.div
+              key={card.key}
+              className="h-full"
+              variants={{
+                hidden: { opacity: 0, y: 24, filter: "blur(10px)" },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  filter: "blur(0px)",
+                  transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+                },
+              }}
+            >
+              {card}
+            </motion.div>
+          ))}
+        </motion.div>
+
+        <div className="mt-16 grid items-start gap-6">
+          <ChartCard
+            id="province-distribution-map"
+            title="Province Distribution"
+            description="Peta Indonesia dengan intensitas warna berdasarkan jumlah response tiap provinsi, dilengkapi ranking provinsi di sisi kanan."
+            icon={MapPin}
+            hideIcon
+            descriptionClassName="max-w-none"
+          >
+            <ProvinceDistributionMap provinces={analytics.marketOverview.provinceDistribution} />
+          </ChartCard>
+        </div>
       </div>
     </section>
   );

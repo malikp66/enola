@@ -24,11 +24,11 @@ export function CustomerProblem({ analytics }: { analytics: SurveyAnalytics }) {
     <section id="customer-problem" className="space-y-6">
       <SectionHeading
         eyebrow="Customer Problem"
-        title="Problem yang membuat scented hijab relevan"
-        description="Fokus utama Enola adalah membaca apakah masalah konsumen memang berkaitan dengan rasa kurang segar, gerah, lepek, atau pengalaman memakai kerudung yang menurun setelah beberapa jam."
+        title="Masalah utama yang membuat scented hijab relevan"
+        description="Bagian ini merangkum apakah masalah yang dialami responden memang cukup dekat dengan proposisi scented hijab, terutama dalam konteks rasa kurang segar, panas, atau penurunan kenyamanan setelah beberapa jam."
       />
 
-      <div className="grid items-start gap-5 xl:grid-cols-[0.84fr_1fr_0.86fr]">
+      <div id="customer-problem-content" className="grid items-start gap-5 xl:grid-cols-[0.84fr_1fr_0.86fr]">
         <div className="grid h-full gap-5">
           <MetricCard
             id="main-problem-card"
