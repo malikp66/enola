@@ -363,7 +363,7 @@ export function TourProvider({
               <rect
                 width="100%"
                 height="100%"
-                fill="rgba(0,0,0,0.5)"
+                fill="rgba(33,37,41,0.42)"
                 mask="url(#tour-mask)"
               />
             </motion.svg>
@@ -379,7 +379,10 @@ export function TourProvider({
                 height: spotlightHeight,
                 borderRadius: spotlightBorderRadius,
               }}
-              className={cn("z-[100] border-2 border-muted-foreground", className)}
+              className={cn(
+                "z-[100] border-2 border-[#343a40] shadow-[0_0_0_1px_rgba(248,249,250,0.5),0_18px_40px_rgba(33,37,41,0.16)]",
+                className
+              )}
             />
 
             <motion.div
@@ -402,11 +405,11 @@ export function TourProvider({
                 maxWidth: 400,
                 minWidth: 300,
               }}
-              className="bg-background relative z-[100] rounded-lg border p-4 shadow-lg"
+              className="relative z-[100] rounded-[1.5rem] border border-[#ced4da] bg-[#f8f9fa] p-4 shadow-[0_24px_54px_rgba(33,37,41,0.14)]"
             >
               <div className="absolute right-4 top-4 z-10 flex items-center gap-2">
                 {!currentStepData?.hidePagination && (
-                  <span className="text-muted-foreground text-xs">
+                  <span className="text-xs font-medium text-[#6c757d]">
                     {currentStep + 1} / {steps.length}
                   </span>
                 )}
@@ -417,7 +420,7 @@ export function TourProvider({
                       e.stopPropagation();
                       endTour();
                     }}
-                    className="inline-flex h-6 w-6 items-center justify-center rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#dee2e6] bg-[#f8f9fa] text-[#495057] opacity-85 transition hover:border-[#adb5bd] hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-[#adb5bd]/35"
                   >
                     <X aria-hidden="true" className="h-4 w-4" />
                     <span className="sr-only">Close</span>
@@ -452,7 +455,7 @@ export function TourProvider({
                     {showSkip ? (
                       <button
                         onClick={endTour}
-                        className="text-xs text-muted-foreground hover:text-foreground"
+                        className="text-xs font-medium text-[#6c757d] transition hover:text-[#212529]"
                       >
                         Skip tour
                       </button>
@@ -461,12 +464,21 @@ export function TourProvider({
                     )}
                     <div className="flex gap-2">
                       {currentStep > 0 && (
-                        <Button variant="outline" size="sm" onClick={previousStep}>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={previousStep}
+                          className="rounded-full border-[#ced4da] bg-[linear-gradient(180deg,#f8f9fa_0%,#e9ecef_100%)] px-4 text-[#343a40] hover:border-[#adb5bd] hover:bg-[linear-gradient(180deg,#f8f9fa_0%,#dee2e6_100%)]"
+                        >
                           Previous
                         </Button>
                       )}
                       {!currentStepData?.hideNext && (
-                        <Button size="sm" onClick={nextStep}>
+                        <Button
+                          size="sm"
+                          onClick={nextStep}
+                          className="rounded-full border border-[#343a40] bg-[linear-gradient(135deg,#212529_0%,#343a40_56%,#495057_100%)] px-4 text-[#f8f9fa] shadow-[0_12px_28px_rgba(33,37,41,0.12)] hover:brightness-105"
+                        >
                           {currentStep === steps.length - 1 ? "Finish" : "Next"}
                         </Button>
                       )}
@@ -502,7 +514,7 @@ export function TourAlertDialog({ isOpen, setIsOpen }: { isOpen: boolean, setIsO
 
   return (
     <AlertDialog open={isOpen}>
-      <AlertDialogContent className="max-w-md p-6">
+      <AlertDialogContent className="max-w-md rounded-[1.75rem] border border-[#ced4da] bg-[#f8f9fa] p-6 shadow-[0_24px_60px_rgba(33,37,41,0.14)]">
         <AlertDialogHeader className="flex flex-col items-center justify-center">
           <div className="relative mb-4">
             <motion.div
@@ -528,21 +540,28 @@ export function TourAlertDialog({ isOpen, setIsOpen }: { isOpen: boolean, setIsO
                 },
               }}
             >
-              <Torus className="size-32 stroke-1 text-primary" />
+              <Torus className="size-32 stroke-1 text-[#343a40]" />
             </motion.div>
           </div>
-          <AlertDialogTitle className="text-center text-xl font-medium">
-            Welcome to the Tour
+          <AlertDialogTitle className="text-center text-xl font-medium text-[#212529]">
+            Tour per Section
           </AlertDialogTitle>
-          <AlertDialogDescription className="text-muted-foreground mt-2 text-center text-sm">
-            Take a quick tour to learn about the key features and functionality of this application.
+          <AlertDialogDescription className="mt-2 text-center text-sm text-[#495057]">
+            Ikuti versi singkat untuk membaca tiap section utama dashboard tanpa berhenti di setiap chart kecil.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="mt-6 space-y-3">
-          <Button onClick={() => startTour()} className="w-full">
+          <Button
+            onClick={() => startTour()}
+            className="w-full rounded-full border border-[#343a40] bg-[linear-gradient(135deg,#212529_0%,#343a40_56%,#495057_100%)] text-[#f8f9fa] hover:brightness-105"
+          >
             Start Tour
           </Button>
-          <Button onClick={handleSkip} variant="ghost" className="w-full">
+          <Button
+            onClick={handleSkip}
+            variant="ghost"
+            className="w-full rounded-full border border-[#dee2e6] bg-[#f8f9fa] text-[#495057] hover:bg-[#e9ecef] hover:text-[#212529]"
+          >
             Skip Tour
           </Button>
         </div>

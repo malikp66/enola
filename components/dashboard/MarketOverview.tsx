@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "motion/react";
 import { ArrowDownRight, Droplets, MapPin, Sparkles, Users } from "lucide-react";
 
 import { ChartCard } from "@/components/ui/ChartCard";
@@ -64,31 +65,65 @@ export function MarketOverview({
         </div>
       </SectionHeading>
 
-      <div className="mt-16 grid items-start gap-5 xl:grid-cols-3">
-        <MetricCard
-          id="total-respondents-card"
-          title="Total Respondents"
-          value={analytics.marketOverview.totalRespondents}
-          description="Jumlah responden valid yang menjadi dasar pembacaan hasil survei."
-          icon={Users}
-          accent
-        />
-        <MetricCard
-          id="top-province-card"
-          title="Top Province"
-          value={analytics.marketOverview.topProvince}
-          description="Wilayah dengan kontribusi responden terbesar saat ini."
-          icon={MapPin}
-        />
-        <MetricCard
-          id="active-hijab-users-card"
-          title="Freshness Need Signal"
-          value={analytics.marketOverview.freshnessNeedScore}
-          suffix="%"
-          description="Persentase responden yang sering atau kadang merasa kurang nyaman karena bau atau tidak segar."
-          icon={Droplets}
-        />
-      </div>
+      <motion.div
+        className="mt-16 grid items-stretch gap-5 xl:grid-cols-3"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.32 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.1,
+            },
+          },
+        }}
+      >
+        {[
+          <MetricCard
+            key="respondents"
+            id="total-respondents-card"
+            title="Total Respondents"
+            value={analytics.marketOverview.totalRespondents}
+            description="Jumlah responden valid yang menjadi dasar pembacaan hasil survei."
+            icon={Users}
+            accent
+          />,
+          <MetricCard
+            key="province"
+            id="top-province-card"
+            title="Top Province"
+            value={analytics.marketOverview.topProvince}
+            description="Wilayah dengan kontribusi responden terbesar saat ini."
+            icon={MapPin}
+          />,
+          <MetricCard
+            key="freshness"
+            id="active-hijab-users-card"
+            title="Freshness Need Signal"
+            value={analytics.marketOverview.freshnessNeedScore}
+            suffix="%"
+            description="Persentase responden yang sering atau kadang merasa kurang nyaman karena bau atau tidak segar."
+            icon={Droplets}
+          />,
+        ].map((card) => (
+          <motion.div
+            key={card.key}
+            className="h-full"
+            variants={{
+              hidden: { opacity: 0, y: 24, filter: "blur(10px)" },
+              visible: {
+                opacity: 1,
+                y: 0,
+                filter: "blur(0px)",
+                transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+              },
+            }}
+          >
+            {card}
+          </motion.div>
+        ))}
+      </motion.div>
 
       <div className="mt-16 grid items-start gap-6">
         <ChartCard

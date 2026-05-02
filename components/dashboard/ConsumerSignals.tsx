@@ -1,7 +1,9 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CalendarClock,
+  ChevronDown,
   MessageCircleWarning,
   ShieldAlert,
   ShoppingBag,
@@ -176,6 +178,9 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
   const radii = [84, 63, 42, 21];
   const circumference = radii.map((radius) => 2 * Math.PI * radius);
   const leadSignal = ordered[0];
+  const [activeRingLabel, setActiveRingLabel] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const activeRing = ordered.find((item) => item.label === activeRingLabel) ?? leadSignal ?? null;
 
   return (
     <div className="grid h-[19rem] items-center gap-6 md:grid-cols-[0.94fr_1.06fr]">
@@ -204,30 +209,67 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
                 strokeDasharray={`${circumference[index] * (item.percentage / 100)} ${circumference[index]}`}
                 strokeLinecap="round"
                 strokeWidth="14"
+                className="cursor-help transition-opacity duration-200 hover:opacity-90 focus:opacity-90"
+                tabIndex={0}
+                role="button"
+                aria-label={`${item.label}: ${item.value} jawaban atau ${Math.round(item.percentage)} persen`}
+                onMouseEnter={() => {
+                  setActiveRingLabel(item.label);
+                  setShowTooltip(true);
+                }}
+                onFocus={() => {
+                  setActiveRingLabel(item.label);
+                  setShowTooltip(true);
+                }}
+                onMouseLeave={() => {
+                  setActiveRingLabel(null);
+                  setShowTooltip(false);
+                }}
+                onBlur={() => {
+                  setActiveRingLabel(null);
+                  setShowTooltip(false);
+                }}
               />
             </g>
           ))}
         </svg>
-        <div className="glass-panel absolute inset-[31%] rounded-full" />
         <div className="absolute text-center">
           <div className="relative inline-flex flex-col items-center">
             <button
               type="button"
               className="cursor-help rounded-full px-2 py-1"
-              aria-label={`Lihat detail sinyal tertinggi: ${leadSignal?.label ?? "Belum ada data"}`}
+              aria-label={`Lihat detail distribusi utama: ${activeRing?.label ?? "Belum ada data"}`}
+              onMouseEnter={() => {
+                setActiveRingLabel(null);
+                setShowTooltip(true);
+              }}
+              onFocus={() => {
+                setActiveRingLabel(null);
+                setShowTooltip(true);
+              }}
+              onMouseLeave={() => {
+                setActiveRingLabel(null);
+                setShowTooltip(false);
+              }}
+              onBlur={() => {
+                setActiveRingLabel(null);
+                setShowTooltip(false);
+              }}
             >
               <p className="font-heading text-[2.3rem] leading-none text-[#111215]">
-                {Math.round(leadSignal?.percentage ?? 0)}%
+                {Math.round((activeRing ?? leadSignal)?.percentage ?? 0)}%
               </p>
             </button>
-            {leadSignal ? (
-              <div className="glass-panel pointer-events-none absolute left-1/2 top-full z-10 mt-3 w-max min-w-[11rem] -translate-x-1/2 rounded-[1.1rem] px-3 py-2 text-left opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--brand-royal)]">
-                  Top signal
+            {activeRing && showTooltip ? (
+              <div
+                className="pointer-events-none absolute left-1/2 top-full z-10 mt-3 w-max min-w-[11.5rem] -translate-x-1/2 px-1 py-1 text-left opacity-100 transition duration-200"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#6c757d]">
+                  {activeRing.label === leadSignal?.label ? "Top signal" : "Signal detail"}
                 </p>
-                <p className="mt-1 text-sm font-medium text-[#17191d]">{leadSignal.label}</p>
+                <p className="mt-1 text-sm font-medium text-[#17191d]">{activeRing.label}</p>
                 <p className="mt-1 text-xs text-[var(--brand-muted)]">
-                  {leadSignal.value} jawaban • {Math.round(leadSignal.percentage)}%
+                  {activeRing.value} jawaban • {Math.round(activeRing.percentage)}%
                 </p>
               </div>
             ) : null}
@@ -235,17 +277,78 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
         </div>
       </div>
 
-      <div className="space-y-3">
-        {ordered.map((item, index) => (
-          <div
+      <FreshnessScrollableList
+        items={ordered}
+        colors={ACTIVITY_RING_COLORS}
+        onItemFocus={(item) => {
+          setActiveRingLabel(item.label);
+          setShowTooltip(true);
+        }}
+        onItemLeave={() => {
+          setActiveRingLabel(null);
+          setShowTooltip(false);
+        }}
+      />
+    </div>
+  );
+}
+
+function FreshnessScrollableList({
+  items,
+  colors,
+  onItemFocus,
+  onItemLeave,
+}: {
+  items: DistributionDatum[];
+  colors: string[];
+  onItemFocus: (item: DistributionDatum) => void;
+  onItemLeave: () => void;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+  const [canScrollUp, setCanScrollUp] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const node = scrollRef.current;
+    if (!node) return;
+    const maxScroll = node.scrollHeight - node.clientHeight;
+    setCanScrollUp(node.scrollTop > 8);
+    setCanScrollDown(maxScroll - node.scrollTop > 8);
+  }, []);
+
+  useEffect(() => {
+    updateScrollState();
+    const node = scrollRef.current;
+    if (!node) return;
+    node.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+    return () => {
+      node.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, [updateScrollState]);
+
+  return (
+    <div className="relative">
+      <div
+        ref={scrollRef}
+        className="custom-scrollbar scrollbar-reveal max-h-[15rem] space-y-3 overflow-y-auto pr-1.5 pb-12 md:max-h-none md:overflow-visible md:pb-0"
+      >
+        {items.map((item, index) => (
+          <button
             key={item.label}
-            className="glass-panel rounded-[1.2rem] px-3.5 py-3"
+            type="button"
+            className="glass-panel block w-full rounded-[1.2rem] px-3.5 py-3 text-left transition duration-200 hover:border-[#adb5bd] focus:outline-none focus:ring-2 focus:ring-[#6c757d]/25"
+            onMouseEnter={() => onItemFocus(item)}
+            onMouseLeave={onItemLeave}
+            onFocus={() => onItemFocus(item)}
+            onBlur={onItemLeave}
           >
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <span
                   className="block h-3 w-3 rounded-full"
-                  style={{ backgroundColor: ACTIVITY_RING_COLORS[index % ACTIVITY_RING_COLORS.length] }}
+                  style={{ backgroundColor: colors[index % colors.length] }}
                 />
                 <div>
                   <p className="text-sm font-medium text-[#17191d]">{item.label}</p>
@@ -256,9 +359,31 @@ function ActivityRingChart({ data }: { data: DistributionDatum[] }) {
                 {Math.round(item.percentage)}%
               </span>
             </div>
-          </div>
+          </button>
         ))}
       </div>
+
+      {canScrollUp ? (
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-[linear-gradient(180deg,#f8f9fa_0%,rgba(248,249,250,0)_100%)] md:hidden" />
+      ) : null}
+      {canScrollDown ? (
+        <>
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-[linear-gradient(180deg,rgba(248,249,250,0)_0%,rgba(248,249,250,0.9)_62%,#f8f9fa_100%)] md:hidden" />
+          <button
+            type="button"
+            aria-label="Scroll daftar sinyal ke bawah"
+            className="glass-icon absolute bottom-2 left-1/2 z-10 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full md:hidden"
+            onClick={() =>
+              scrollRef.current?.scrollBy({
+                top: 144,
+                behavior: "smooth",
+              })
+            }
+          >
+            <ChevronDown className="h-4 w-4 text-[#495057]" />
+          </button>
+        </>
+      ) : null}
     </div>
   );
 }

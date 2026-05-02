@@ -22,22 +22,22 @@ function TourContent({
 
   return (
     <div className="space-y-4">
-      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[#b37b60]">
+      <p className="text-[0.65rem] font-semibold uppercase tracking-[0.28em] text-[#6c757d]">
         Guided Insight
       </p>
       <div className="space-y-1.5">
-        <h3 className="font-heading text-2xl leading-none text-[#2d2018]">{title}</h3>
-        <p className="text-sm leading-6 text-[#6c584c]">{summary}</p>
+        <h3 className="font-heading text-2xl leading-none text-[#212529]">{title}</h3>
+        <p className="text-sm leading-6 text-[#495057]">{summary}</p>
       </div>
       {implication && (
-        <div className="rounded-[1.35rem] border border-[#ead8ce] bg-[#fff8f4] p-3 text-sm leading-6 text-[#7b5e4c]">
+        <div className="rounded-[1.35rem] border border-[#ced4da] bg-[#e9ecef] p-3 text-sm leading-6 text-[#495057]">
           {implication}
         </div>
       )}
       {isStart && (
         <Button
           onClick={nextStep}
-          className="w-full gap-2 rounded-full bg-[#bd7e61] hover:bg-[#a66d54]"
+          className="w-full gap-2 rounded-full bg-[linear-gradient(135deg,#212529_0%,#343a40_58%,#495057_100%)] text-[#f8f9fa] hover:brightness-110"
         >
           <Play className="h-4 w-4 fill-current" />
           Mulai Guided Insight
@@ -77,70 +77,34 @@ export function buildTourSteps(analytics: SurveyAnalytics): TourStep[] {
       { hideNext: true, hidePagination: true }
     ),
     makeStep(
-      "total-respondents-card",
+      "market-overview",
       <TourContent
-        title="Ukuran sampel awal"
-        summary={`Total responden saat ini adalah ${analytics.totalRespondents}. Jumlah ini menjadi dasar awal untuk membaca validasi market Enola.`}
-        implication="Semakin banyak responden, semakin kuat dasar keputusan. Untuk tahap eksplorasi ide, angka ini sudah cukup untuk membaca pola awal demand."
+        title="Market overview"
+        summary={`Bagian pembuka ini merangkum ${analytics.totalRespondents} responden, wilayah terkuat di ${analytics.marketOverview.topProvince}, dan sinyal kebutuhan kesegaran sebesar ${Math.round(analytics.marketOverview.freshnessNeedScore)}%.`}
+        implication="Gunakan section ini untuk membuka cerita: ukuran sampel, wilayah dominan, lalu alasan mengapa ide scented hijab layak dibaca lebih lanjut."
       />,
-      "right"
+      "bottom"
     ),
     makeStep(
-      "top-province-card",
+      "consumer-signals",
       <TourContent
-        title="Wilayah responden terkuat"
-        summary={`Provinsi dengan responden terbanyak adalah ${analytics.marketOverview.topProvince}.`}
-        implication={`Insight paling kuat saat ini datang dari ${analytics.marketOverview.topProvince}, sehingga wilayah ini layak diprioritaskan untuk test market atau komunikasi awal.`}
-      />,
-      "right"
-    ),
-    makeStep(
-      "buying-frequency-chart",
-      <TourContent
-        title="Frekuensi membeli kerudung"
-        summary={analytics.questionInsights.buyingFrequency.summary}
-        implication={analytics.questionInsights.buyingFrequency.implication}
-      />,
-      "top"
-    ),
-    makeStep(
-      "purchase-channel-chart",
-      <TourContent
-        title="Tempat membeli kerudung"
-        summary={analytics.questionInsights.purchaseChannels.summary}
-        implication={analytics.questionInsights.purchaseChannels.implication}
-      />,
-      "left"
-    ),
-    makeStep(
-      "buying-priority-chart",
-      <TourContent
-        title="Prioritas saat membeli kerudung"
-        summary={analytics.questionInsights.buyingPriority.summary}
-        implication={analytics.questionInsights.buyingPriority.implication}
-      />,
-      "top"
-    ),
-    makeStep(
-      "freshness-discomfort-chart",
-      <TourContent
-        title="Sinyal ketidaknyamanan kesegaran"
-        summary={analytics.questionInsights.freshnessDiscomfort.summary}
+        title="Consumer signals"
+        summary="Section ini menjelaskan perilaku pendukung: apa yang paling dicari saat membeli kerudung, seberapa sering responden merasa kurang segar, dan kekhawatiran lain di sekitar produk."
         implication={analytics.questionInsights.freshnessDiscomfort.implication}
       />,
-      "left"
+      "top"
     ),
     makeStep(
-      "problem-chart",
+      "customer-problem",
       <TourContent
-        title="Masalah utama pengguna"
+        title="Customer problem"
         summary={analytics.questionInsights.problems.summary}
         implication={analytics.questionInsights.problems.implication}
       />,
       "top"
     ),
     makeStep(
-      "interest-chart",
+      "product-interest",
       <TourContent
         title="Minat terhadap scented hijab"
         summary={`Market Interest Score Enola adalah ${Math.round(analytics.productInterest.marketInterestScore)}%, dihitung dari jawaban Sangat tertarik dan Tertarik.`}
@@ -149,61 +113,43 @@ export function buildTourSteps(analytics: SurveyAnalytics): TourStep[] {
       "left"
     ),
     makeStep(
-      "main-benefit-chart",
+      "preferred-scent",
       <TourContent
-        title="Benefit utama yang dicari"
-        summary={analytics.questionInsights.mainBenefit.summary}
-        implication={analytics.questionInsights.mainBenefit.implication}
-      />,
-      "top"
-    ),
-    makeStep(
-      "preferred-scent-chart",
-      <TourContent
-        title="Preferensi aroma MVP"
+        title="Preferred scent"
         summary={`Aroma paling disukai adalah ${analytics.preferredScent.topScent}${analytics.preferredScent.secondaryScent ? `, diikuti ${analytics.preferredScent.secondaryScent}` : ""}.`}
         implication={`Varian awal dapat diprioritaskan ke aroma ${analytics.preferredScent.topScent.toLowerCase()} untuk meningkatkan peluang penerimaan saat market testing.`}
       />,
       "top"
     ),
     makeStep(
-      "main-concern-chart",
+      "price-acceptance",
       <TourContent
-        title="Kekhawatiran terbesar"
-        summary={analytics.questionInsights.mainConcern.summary}
-        implication={analytics.questionInsights.mainConcern.implication}
-      />,
-      "left"
-    ),
-    makeStep(
-      "current-price-chart",
-      <TourContent
-        title="Harga yang biasa dibeli"
-        summary={analytics.questionInsights.currentPrice.summary}
-        implication={analytics.questionInsights.currentPrice.implication}
-      />,
-      "right"
-    ),
-    makeStep(
-      "price-chart",
-      <TourContent
-        title="Harga yang masih cocok"
+        title="Price acceptance"
         summary={`Rentang harga paling diterima adalah ${analytics.priceAcceptance.topPriceRange}. Price Fit Score terhadap target Enola ${Math.round(analytics.priceAcceptance.priceFitScore)}%.`}
         implication={`Target harga MVP ${analytics.priceAcceptance.topPriceRange.toLowerCase()} harus menjadi anchor utama pada eksperimen pricing pertama.`}
       />,
       "top"
     ),
     makeStep(
-      "purchase-intention-chart",
+      "purchase-intention",
       <TourContent
-        title="Kemungkinan membeli"
+        title="Purchase intention"
         summary={`Purchase Potential Score mencapai ${Math.round(analytics.purchaseIntention.purchaseIntentionScore)}% dari gabungan jawaban Sangat mungkin dan Mungkin.`}
         implication={analytics.questionInsights.purchaseIntention.implication}
       />,
       "left"
     ),
     makeStep(
-      "final-validation-score",
+      "purchase-channel-assets",
+      <TourContent
+        title="Purchase channel assets"
+        summary={analytics.questionInsights.purchaseChannels.summary}
+        implication={analytics.questionInsights.purchaseChannels.implication}
+      />,
+      "top"
+    ),
+    makeStep(
+      "final-validation",
       <TourContent
         title="Kesimpulan validasi bisnis"
         summary={`Final Business Validation Score Enola adalah ${Math.round(analytics.finalValidation.finalBusinessValidationScore)} dengan status ${analytics.finalValidation.validationStatus}.`}

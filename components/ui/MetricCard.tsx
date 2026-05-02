@@ -112,7 +112,7 @@ export function MetricCard({
           <div
             className={cn(
               "font-heading leading-none",
-              accent ? "text-[3.35rem] text-[#f8f9fa] md:text-[4.2rem]" : "text-4xl text-[#111215] md:text-[3.1rem]",
+              accent ? "text-[3.55rem] text-[#f8f9fa] md:text-[4.65rem]" : "text-4xl text-[#111215] md:text-[3.1rem]",
               valueClassName
             )}
           >

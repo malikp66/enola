@@ -60,7 +60,7 @@ export default function Home() {
 
     async function run() {
       try {
-        const parsed = await loadSurveyCsv("/data/enola-survey.csv");
+        const parsed = await loadSurveyCsv("/api/survey-csv");
 
         if (parsed.missingCriticalFields.length > 0) {
           const readable = parsed.missingCriticalFields.map((field) => FIELD_LABELS[field]).join(", ");
@@ -192,8 +192,9 @@ function ErrorScreen({ message }: { message: string }) {
           </h1>
           <p className="max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">{message}</p>
           <InsightCard>
-            Pastikan file tersedia di `public/data/enola-survey.csv` dan kolom penting seperti
-            provinsi, minat produk, harga, dan purchase intention tetap terdeteksi.
+            Pastikan Google Sheets bisa diakses untuk sinkronisasi saat halaman dibuka, atau
+            siapkan fallback file `public/data/enola-survey.csv` dengan kolom penting yang tetap
+            terdeteksi.
           </InsightCard>
         </div>
       </div>
@@ -213,12 +214,13 @@ function EmptyScreen() {
           Data survei belum ditemukan
         </h1>
         <p className="mt-4 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
-          Tambahkan file CSV hasil export Google Sheets ke `public/data/enola-survey.csv`, lalu
-          buka ulang dashboard untuk memproses dan memvisualisasikan hasil survei Enola.
+          Hubungkan URL CSV Google Sheets agar dashboard sinkron saat halaman dibuka, atau
+          tambahkan fallback file `public/data/enola-survey.csv` bila ingin tetap berjalan tanpa
+          koneksi ke Google Sheets.
         </p>
         <div className="glass-pill mt-8 inline-flex items-center gap-3 rounded-full px-4 py-2 text-sm text-[var(--brand-muted)]">
           <ChartNoAxesCombined aria-hidden="true" className="h-4 w-4 text-[var(--brand-royal)]" />
-          Dashboard akan otomatis membaca file saat halaman dibuka
+          Dashboard akan sinkron saat halaman dibuka
         </div>
       </div>
     </main>

@@ -83,12 +83,14 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
               <AreaChart data={combinedData} margin={{ left: 8, right: 10, top: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="acceptable-gradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#343a40" stopOpacity={0.3} />
+                    <stop offset="0%" stopColor="#212529" stopOpacity={0.34} />
+                    <stop offset="62%" stopColor="#343a40" stopOpacity={0.12} />
                     <stop offset="100%" stopColor="#343a40" stopOpacity={0} />
                   </linearGradient>
                   <linearGradient id="current-gradient" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="#adb5bd" stopOpacity={0.28} />
-                    <stop offset="100%" stopColor="#adb5bd" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#6c757d" stopOpacity={0.24} />
+                    <stop offset="60%" stopColor="#adb5bd" stopOpacity={0.12} />
+                    <stop offset="100%" stopColor="#ced4da" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid stroke="rgba(206,212,218,0.88)" vertical={false} strokeDasharray="4 7" />
@@ -137,32 +139,32 @@ export function PriceAcceptance({ analytics }: { analytics: SurveyAnalytics }) {
                   name="Acceptable"
                   type="monotone"
                   dataKey="acceptable"
-                  stroke="#343a40"
+                  stroke="#212529"
                   strokeWidth={3}
                   fill="url(#acceptable-gradient)"
-                  activeDot={{ r: 6, fill: "#343a40", stroke: "#f8f9fa", strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: "#212529", stroke: "#f8f9fa", strokeWidth: 2 }}
                 />
                 <Area
                   name="Current"
                   type="monotone"
                   dataKey="current"
-                  stroke="#adb5bd"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
+                  stroke="#6c757d"
+                  strokeWidth={2.5}
+                  strokeDasharray="7 6"
                   fill="url(#current-gradient)"
-                  activeDot={{ r: 6, fill: "#adb5bd", stroke: "#f8f9fa", strokeWidth: 2 }}
+                  activeDot={{ r: 6, fill: "#6c757d", stroke: "#f8f9fa", strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">
-            <LegendPill label="Acceptable Price" color="#343a40" />
-            <LegendPill label="Current Buying Range" color="#adb5bd" />
+            <LegendPill label="Acceptable Price" color="#212529" />
+            <LegendPill label="Current Buying Range" color="#6c757d" />
           </div>
 
           <div className="grid gap-4">
-            <InsightCard className="w-full">
+            <InsightCard className="w-full max-w-none">
               Price Fit dihitung dari porsi responden yang menilai rentang Rp100.000 - Rp200.000
               masih cocok untuk Enola dibanding total jawaban valid, sehingga score ini langsung
               membaca kecocokan target harga MVP terhadap ekspektasi pasar.
